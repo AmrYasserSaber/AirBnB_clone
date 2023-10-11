@@ -1,0 +1,55 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="sqlalchemy.orm.base.Mapped.__setitem__" />
+          <option value="api.routers.features_base.core_models" />
+          <option value="api.db.models.UserModel" />
+          <option value="api.db.models.DivisionModel" />
+          <option value="api.db.models.AssignmentModel" />
+          <option value="api.db.models.MeetingModel" />
+          <option value="api.db.models.AnnouncementModel" />
+          <option value="api.db.models.ExcuseModel" />
+          <option value="api.validators.UserValidator" />
+          <option value="api.validators.AssignmentValidator" />
+          <option value="api.validators.DivisionValidator" />
+          <option value="api.validators.AnnouncementValidator" />
+          <option value="api.validators.MeetingValidator" />
+          <option value="api.validators.ExcuseValidator" />
+          <option value="api.validators.FeedbackValidator" />
+          <option value="api.db.models.FeedbackModel" />
+          <option value="api.db.models.SubmissionModel" />
+          <option value="api.validators.SubmissionValidator" />
+          <option value="api.validators.FeedbackBaseValidator" />
+          <option value="api.validators.SubmissionBaseValidator" />
+          <option value="api.routes.submissions" />
+          <option value="api.validators.ExcuseBaseValidator" />
+          <option value="api.db.models.RoleModel" />
+          <option value="api.validators.RoleValidator" />
+          <option value="api.validators.ExcuseUpdateValidator" />
+          <option value="api.validators.AnnouncementUpdateValidator" />
+          <option value="api.validators.AssignmentUpdateValidator" />
+          <option value="api.validators.DivisionUpdateValidator" />
+          <option value="api.validators.FeedbackUpdateValidator" />
+          <option value="api.validators.MeetingUpdateValidator" />
+          <option value="api.validators.RoleUpdateValidator" />
+          <option value="api.validators.SubmissionUpdateValidator" />
+          <option value="api.validators.UsernameValidator" />
+          <option value="api.validators.HTTPErrorValidator" />
+          <option value="api.db.models.UserDivisionPermissionModel" />
+          <option value="api.db.models.UserRoleDivisionModel" />
+          <option value="api.validators.DivisionBaseValidator" />
+          <option value="api.validators.UserDivisionPermissionValidator" />
+          <option value="api.validators.PermissionValidator" />
+          <option value="api.validators.FeaturePermissionValidator" />
+          <option value="api.validators.CorePermissionValidator" />
+          <option value="api.db.models.UserRoleModel" />
+          <option value="api.db.models.feature_models" />
+          <option value="api.db.models.sub_models" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
