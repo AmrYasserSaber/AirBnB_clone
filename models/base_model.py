@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     def __init__(self):
         self.id = str(uuid.uuid4())
@@ -10,7 +11,8 @@ class BaseModel:
         self.name = "My First Model"
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.now()
