@@ -19,7 +19,9 @@ class BaseModel:
             self.name = "My First Model"
 
     def __str__(self):
-        "This is a implement called when print the model"
+        """
+            This is a implement called when print the model
+        """
         return "[{}] ({}) {}".format(self.__class__.__name__,
                                      self.id, self.__dict__)
 
