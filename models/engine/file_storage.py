@@ -1,5 +1,6 @@
 import json
 from os import path
+from models.base_model import BaseModel
 
 """
 File Storage: this is a file storage class that used to
@@ -8,6 +9,7 @@ store all file object as a json object
 
 
 class FileStorage:
+    """File Storage Class"""
     __file_path = "file.json"
     __objects = {}
 
