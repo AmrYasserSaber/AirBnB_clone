@@ -1,6 +1,5 @@
 import json
 from os import path
-from models.base_model import BaseModel
 
 """
 File Storage: this is a file storage class that used to
