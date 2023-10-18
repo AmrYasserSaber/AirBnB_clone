@@ -1,6 +1,10 @@
 import uuid
 from datetime import datetime
 import models
+"""
+Base Model Class
+"""
+
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
@@ -30,10 +34,9 @@ class BaseModel:
         """
             This is a implement called when print the model
         """
-        
+
         self.updated_at = datetime.now()
         models.storage.save()
-
 
     def to_dict(self):
         result = {
