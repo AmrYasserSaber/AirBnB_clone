@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-
+import models
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
@@ -17,6 +17,7 @@ class BaseModel:
             self.updated_at = datetime.now()
             self.my_number = 89
             self.name = "My First Model"
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -26,7 +27,13 @@ class BaseModel:
                                      self.id, self.__dict__)
 
     def save(self):
+        """
+            This is a implement called when print the model
+        """
+        
         self.updated_at = datetime.now()
+        models.storage.save()
+
 
     def to_dict(self):
         result = {
