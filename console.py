@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import cmd
-import sys
-
 """
     implement of console file that manage all my action in this project
 """
 
+
+import cmd
+import sys
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
