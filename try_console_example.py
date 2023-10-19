@@ -17,7 +17,7 @@ class HelloWorld(cmd.Cmd):
         "Change the interactive prompt"
         self.prompt = line + ': '
 
-    def do_EOF(self, line):
+    def do_exit(self, line):
         return True
 
 if __name__ == '__main__':
