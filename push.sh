@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # git add --chmod +x $1
 git add *
