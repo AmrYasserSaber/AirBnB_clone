@@ -99,8 +99,8 @@ class HBNBCommand(cmd.Cmd):
             for key in all_model.keys():
                 if curr_key in key:
                     del (all_model[key])
+                    storage.save(all_model)
                     check = False
-                    storage.save(self)
                     break
             if check:
                 print("** no instance found **")
@@ -128,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(class_name_id) == 0:
             print("** class name missing **")
-        elif class_name_id[0] not in all_model.keys():
+        elif class_name_id[0] not in my_models.keys():
             print("** class doesn't exist **")
         elif len(class_name_id) < 2:
             print("** instance id missing **")
@@ -146,3 +146,5 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
 
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
