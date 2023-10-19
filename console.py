@@ -100,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
                 if curr_key in key:
                     del (all_model[key])
                     check = False
-                    storage.save()
+                    storage.save(self)
                     break
             if check:
                 print("** no instance found **")
