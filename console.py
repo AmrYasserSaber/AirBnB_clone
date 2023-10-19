@@ -9,6 +9,7 @@ import sys
 import json
 from models.base_model import BaseModel
 from models import storage
+import shlex
 
 
 my_models = {"BaseModel": BaseModel}
@@ -42,29 +43,33 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
-    def do_show(self, arg=None):
+    def do_show(self, args=None):
         "Show the string implementation of the class"
         storage.reload()
         all_model = storage.all()
-        class_name_id = arg.split(" ")
-        
+        class_name_id = shlex.split(args)
+        # print(class_name_id)
+        # print(all_model)
     
-        # print("start", id, class_name)
         if  len(class_name_id) == 0:
             print("** class name missing **")
         elif class_name_id[0] not in my_models.keys():
             print("** class doesn't exist **")
-        elif len(class_name_id) > 2:
+        elif len(class_name_id) < 2:
             print("** instance id missing **")
-        # else:
-        #     key = class_name + " '>."+id
-        #     print(key)
-        #     print(all_model.keys())
-        #     if key in all_model.keys():
-        #         obj = str(all_model[key])
-        #         print(obj)
-        #     else:
-        #         print("** no instance found **")
+        else:
+            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            # print(key)
+            print(all_model.keys())
+            print("#" * 50)
+            check = True
+            for key in all_model.keys():
+                if curr_key in key:
+                    print(all_model[key])
+                    check = False
+                    break
+            if check:
+                print("** no instance found **")
 
 
 if __name__ == '__main__':
