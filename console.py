@@ -70,6 +70,34 @@ class HBNBCommand(cmd.Cmd):
                     break
             if check:
                 print("** no instance found **")
+    def do_destroy(self, args):
+        "Deletes an instance based on the class name and id (save the change into the JSON file)."
+        storage.reload()
+        all_model = storage.all()
+        class_name_id = shlex.split(args)
+        # print(class_name_id)
+        # print(all_model)
+    
+        if  len(class_name_id) == 0:
+            print("** class name missing **")
+        elif class_name_id[0] not in my_models.keys():
+            print("** class doesn't exist **")
+        elif len(class_name_id) < 2:
+            print("** instance id missing **")
+        else:
+            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            # print(key)
+            print(all_model.keys())
+            print("#" * 50)
+            check = True
+            for key in all_model.keys():
+                if curr_key in key:
+                    del (all_model[key])
+                    check = False
+                    break
+            if check:
+                print("** no instance found **")
+
 
 
 if __name__ == '__main__':
