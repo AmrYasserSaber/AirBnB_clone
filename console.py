@@ -60,8 +60,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
             # print(key)
-            print(all_model.keys())
-            print("#" * 50)
+            # print(all_model.keys())
+            # print("#" * 50)
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -87,8 +87,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
             # print(key)
-            print(all_model.keys())
-            print("#" * 50)
+            # print(all_model.keys())
+            # print("#" * 50)
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -98,7 +98,18 @@ class HBNBCommand(cmd.Cmd):
             if check:
                 print("** no instance found **")
 
-
+    def do_all(self, model_name):
+        storage.reload()
+        models = storage.all()
+        check = False
+        for key in models.keys():
+            if model_name in key:
+                check = True
+        if check:
+            for key in models:
+                print(models[key])
+        else:
+            print("** class doesn't exist **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
