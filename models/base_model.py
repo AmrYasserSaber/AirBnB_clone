@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -22,7 +23,9 @@ class BaseModel:
                                      self.id, self.__dict__)
 
     def save(self):
-        self.updated_at = datetime.now()
+        """Update updated_at with the current datetime."""
+        self.updated_at = datetime.today()
+        models.storage.save()
 
     def to_dict(self):
         result = {
