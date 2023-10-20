@@ -8,11 +8,12 @@ import cmd
 import sys
 import json
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel}
+my_models = {"BaseModel": BaseModel, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -146,5 +147,3 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
 
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()
