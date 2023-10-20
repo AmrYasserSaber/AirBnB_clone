@@ -122,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(class_name_id) == 0:
             print("** class name missing **")
-        elif class_name_id[0] not in all_model.keys():
+        elif class_name_id[0] not in my_models.keys():
             print("** class doesn't exist **")
         elif len(class_name_id) < 2:
             print("** instance id missing **")
