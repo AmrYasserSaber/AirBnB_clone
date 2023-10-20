@@ -13,9 +13,9 @@ File Storage: this is a file storage class that used to
 store all file object as a json object
 """
 
-
 my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
              "Review": Review, "State": State, "City": City}
+
 
 class FileStorage:
     """File Storage Class"""
@@ -56,5 +56,3 @@ class FileStorage:
                 for key, obj in data.items():
                     cls = obj["__class__"]
                     self.__objects[key] = (my_models[cls](**obj))
-                 
-
