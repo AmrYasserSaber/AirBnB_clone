@@ -8,18 +8,11 @@ import cmd
 import sys
 import json
 from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.city import City
-from models.review import Review
-from models.state import State
-from models.place import Place
 from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
-             "Review": Review, "State": State, "City": City}
+my_models = {"BaseModel": BaseModel}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -40,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         print("")
 
     def emptyline(self):
-        "over ride one empty line method"
+        "over Write one empty line method"
         pass
 
     def do_create(self, model_name):
@@ -59,6 +52,8 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_model = storage.all()
         class_name_id = shlex.split(args)
+        # print(class_name_id)
+        # print(all_model)
 
         if len(class_name_id) == 0:
             print("** class name missing **")
@@ -67,7 +62,10 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
+            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            # print(key)
+            # print(all_model.keys())
+            # print("#" * 50)
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -84,6 +82,7 @@ class HBNBCommand(cmd.Cmd):
         all_model = storage.all()
         class_name_id = shlex.split(args)
 
+
         if len(class_name_id) == 0:
             print("** class name missing **")
         elif class_name_id[0] not in my_models.keys():
@@ -91,14 +90,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
+            key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
-            for key in all_model.keys():
-                if curr_key in key:
-                    del (all_model[key])
-                    storage.save()
-                    check = False
-                    break
+            if key in all_model:
+                del all_model[key]
+                storage.save()
+                check = False
             if check:
                 print("** no instance found **")
 
@@ -125,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(class_name_id) == 0:
             print("** class name missing **")
-        elif class_name_id[0] not in my_models.keys():
+        elif class_name_id[0] not in all_model.keys():
             print("** class doesn't exist **")
         elif len(class_name_id) < 2:
             print("** instance id missing **")
