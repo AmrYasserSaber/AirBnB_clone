@@ -19,7 +19,8 @@ from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+my_models = {"BaseModel": BaseModel, "User": User,
+             "Place": Place, "Amenity": Amenity,
              "Review": Review, "State": State, "City": City}
 
 
@@ -86,7 +87,6 @@ class HBNBCommand(cmd.Cmd):
         all_model = storage.all()
         class_name_id = shlex.split(args)
 
-
         if len(class_name_id) == 0:
             print("** class name missing **")
         elif class_name_id[0] not in my_models.keys():
@@ -148,7 +148,8 @@ class HBNBCommand(cmd.Cmd):
                 if hasattr(curr_model, class_name_id[2]):
                     # making a casting to previous type.
                     previous_type = type(getattr(curr_model, class_name_id[2]))
-                    setattr(curr_model, class_name_id, previous_type(class_name_id[3]))
+                    setattr(curr_model, class_name_id,
+                            previous_type(class_name_id[3]))
                 else:
                     setattr(curr_model, class_name_id[2], class_name_id[3])
                 storage.save()
@@ -161,22 +162,23 @@ class HBNBCommand(cmd.Cmd):
             if args in obj:
                 cnt += 1
         print(cnt)
-    
+
     def default(self, line):
-        my_command_list= {"all(": self.do_all, "count(": self.do_count
-                          , "show(": self.do_show, "destroy(":self.do_destroy
-                          , "update(": self.do_update}
+        my_com = {"all(": self.do_all, "count(": self.do_count,
+                  "show(": self.do_show, "destroy(": self.do_destroy,
+                  "update(": self.do_update}
 
         # handle input
-        l = line.split(".")
-        if len(l) == 2:
-            curr = l[1][:l[1].find("(") + 1]
-            passed= l[1][l[1].find("(") + 1: -1]
-            all = f"{l[0]} {passed}"
-            if curr != "update(" and curr in my_command_list.keys() and l[1][-1] == ")":
-                my_command_list[curr](all.strip())
+        t_city = line.split(".")
+        if len(t_city) == 2:
+            curr = t_city[1][:t_city[1].find("(") + 1]
+            passed = t_city[1][t_city[1].find("(") + 1: -1]
+            all = f"{t_city[0]} {passed}"
+            li = "update("
+            if curr != li and curr in my_com.keys() and t_city[1][-1] == ")":
+                my_com[curr](all.strip())
             elif curr == "update(":
-                all = l[0]
+                all = t_city[0]
                 for i in passed:
                     if i not in [",", "\""]:
                         all += i
@@ -184,12 +186,7 @@ class HBNBCommand(cmd.Cmd):
                         if all[-1] != " ":
                             all += " "
                 # print(shlex.split(all))
-                my_command_list[curr](all.strip())
-        
-
-
-
-        
+                my_com[curr](all.strip())
 
 
 if __name__ == "__main__":
