@@ -164,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
     
     def default(self, line):
         my_command_list= {"all(": self.do_all, "count(": self.do_count
-                          , "show(": self.do_show}
+                          , "show(": self.do_show, "destroy(":self.do_destroy}
 
         # handle input
         l = line.split(".")
