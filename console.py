@@ -157,7 +157,6 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_object = storage.all()
         cnt = 0
-
         for obj in all_object:
             if args in obj:
                 cnt += 1
@@ -174,7 +173,7 @@ class HBNBCommand(cmd.Cmd):
             passed= l[1][l[1].find("(") + 1: -1]
             all = f"{l[0]} {passed}"
             if  curr in my_command_list.keys() and l[1][-1] == ")":
-                my_command_list[curr](all)
+                my_command_list[curr](all.strip())
 
 
 
