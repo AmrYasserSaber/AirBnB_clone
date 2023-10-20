@@ -13,7 +13,8 @@ File Storage: this is a file storage class that used to
 store all file object as a json object
 """
 
-my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+my_models = {"BaseModel": BaseModel, "User": User,
+             "Place": Place, "Amenity": Amenity,
              "Review": Review, "State": State, "City": City}
 
 
