@@ -14,8 +14,10 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = [""]
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return "[{}] ({}) <{}>".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) <{}>".format(
+            self.__class__.__name__, self.id, self.__dict__)
