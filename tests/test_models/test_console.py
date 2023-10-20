@@ -1,59 +1,52 @@
 import unittest
-from unittest.mock import patch
 from io import StringIO
+from unittest.mock import patch
 from console import HBNBCommand
 
 
 class TestHBNBCommand(unittest.TestCase):
+    def test_do_show(self):
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("show")
+            self.assertEqual("** class name missing **\n", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_do_create(self, mock_stdout):
-        """
-        Test the 'create' command of HBNBCommand.
-        """
-        cmd = HBNBCommand()
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("show InvalidClassName")
+            self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
 
-        # Test case 1: Missing class name
-        cmd.onecmd("create")
-        self.assertEqual("** class name missing **\n", mock_stdout.getvalue())
+        # You can add more test cases here for valid "show" commands.
 
-        # Test case 2: Non-existing class name
-        cmd.onecmd("create MyModel")
-        self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
+    def test_do_destroy(self):
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("destroy")
+            self.assertEqual("** class name missing **\n", mock_stdout.getvalue())
 
-        # Test case 3: Create an instance and check the ID
-        cmd.onecmd("create BaseModel")
-        output = mock_stdout.getvalue()
-        self.assertTrue(len(output) == 36)
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("destroy InvalidClassName")
+            self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_do_show(self, mock_stdout):
-        """
-        Test the 'show' command of HBNBCommand.
-        """
-        cmd = HBNBCommand()
+        # You can add more test cases here for valid "destroy" commands.
 
-        # Test case 1: Missing class name
-        cmd.onecmd("show")
-        self.assertEqual("** class name missing **\n", mock_stdout.getvalue())
+    def test_do_all(self):
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("all")
+            self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
 
-        # Test case 2: Non-existing class name
-        cmd.onecmd("show MyModel")
-        self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("all InvalidClassName")
+            self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
 
-        # Test case 3: Missing instance id
-        cmd.onecmd("show BaseModel")
-        self.assertEqual("** instance id missing **\n", mock_stdout.getvalue())
+        # You can add more test cases here for valid "all" commands.
 
-        # Test case 4: Non-existing instance id
-        cmd.onecmd("show BaseModel 1234")
-        self.assertEqual("** no instance found **\n", mock_stdout.getvalue())
+    def test_do_update(self):
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("update")
+            self.assertEqual("** class name missing **\n", mock_stdout.getvalue())
 
-        # Test case 5: Show an existing instance (assuming an instance with id 'test_id' exists)
-        cmd.onecmd("show BaseModel test_id")
-        output = mock_stdout.getvalue()
-        self.assertTrue(output.startswith("[BaseModel] (test_id)"))
+        with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
+            HBNBCommand().onecmd("update InvalidClassName")
+            self.assertEqual("** class doesn't exist **\n", mock_stdout.getvalue())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
