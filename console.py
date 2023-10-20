@@ -82,8 +82,6 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_model = storage.all()
         class_name_id = shlex.split(args)
-        # print(class_name_id)
-        # print(all_model)
 
         if len(class_name_id) == 0:
             print("** class name missing **")
@@ -93,14 +91,11 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
-            # print(key)
-            # print(all_model.keys())
-            # print("#" * 50)
             check = True
             for key in all_model.keys():
                 if curr_key in key:
                     del (all_model[key])
-                    storage.save(all_model)
+                    storage.save()
                     check = False
                     break
             if check:
