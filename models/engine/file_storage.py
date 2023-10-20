@@ -1,12 +1,21 @@
 import json
 from os import path
 from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
 
 """
 File Storage: this is a file storage class that used to
 store all file object as a json object
 """
 
+
+my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+             "Review": Review, "State": State, "City": City}
 
 class FileStorage:
     """File Storage Class"""
@@ -23,8 +32,9 @@ class FileStorage:
         """
             save a new object
         """
-        key = f"{obj.__class__}.{obj.id}"
-        self.__objects[key] = obj
+        if obj is not None:
+            key = f"{obj.__class__.__name__}.{obj.id}"
+            self.__objects[key] = obj
 
     def save(self):
         """
@@ -41,9 +51,10 @@ class FileStorage:
             deserializes the JSON file to __objects
         """
         if path.exists(self.__file_path) is True:
-
             with open(self.__file_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
-                for obj in data.values():
+                for key, obj in data.items():
                     cls = obj["__class__"]
-                    self.new(eval(cls)(**obj))
+                    self.__objects[key] = (my_models[cls](**obj))
+                 
+

@@ -40,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         print("")
 
     def emptyline(self):
-        "over Write one empty line method"
+        "over ride one empty line method"
         pass
 
     def do_create(self, model_name):
@@ -59,8 +59,6 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_model = storage.all()
         class_name_id = shlex.split(args)
-        # print(class_name_id)
-        # print(all_model)
 
         if len(class_name_id) == 0:
             print("** class name missing **")
@@ -69,10 +67,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
-            # print(key)
-            # print(all_model.keys())
-            # print("#" * 50)
+            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -96,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -135,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
             for key in all_model.keys():
                 if curr_key in key:
