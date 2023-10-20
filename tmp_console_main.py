@@ -5,14 +5,22 @@
 
 
 import cmd
-import sys
-import json
+import shlex
 from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
+
+
 from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel}
+my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+             "Review": Review, "State": State, "City": City}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -44,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             new_instance = my_models[model_name]()
-            new_instance.save()
+            storage.save()
             print(new_instance.id)
 
     def do_show(self, args=None):
@@ -53,8 +61,6 @@ class HBNBCommand(cmd.Cmd):
         all_model = storage.all()
         class_name_id = shlex.split(args)
         # print(class_name_id)
-        # print(all_model)
-
         if len(class_name_id) == 0:
             print("** class name missing **")
         elif class_name_id[0] not in my_models.keys():
@@ -62,10 +68,8 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
-            # print(key)
-            # print(all_model.keys())
-            # print("#" * 50)
+            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
+
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -81,8 +85,7 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_model = storage.all()
         class_name_id = shlex.split(args)
-        # print(class_name_id)
-        # print(all_model)
+
 
         if len(class_name_id) == 0:
             print("** class name missing **")
@@ -91,17 +94,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
-            # print(key)
-            # print(all_model.keys())
-            # print("#" * 50)
+            key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
-            for key in all_model.keys():
-                if curr_key in key:
-                    del (all_model[key])
-                    storage.save(all_model)
-                    check = False
-                    break
+            if key in all_model:
+                del all_model[key]
+                storage.save()
+                check = False
             if check:
                 print("** no instance found **")
 
@@ -128,12 +126,12 @@ class HBNBCommand(cmd.Cmd):
 
         if len(class_name_id) == 0:
             print("** class name missing **")
-        elif class_name_id[0] not in all_model.keys():
+        elif class_name_id[0] not in my_models.keys():
             print("** class doesn't exist **")
         elif len(class_name_id) < 2:
             print("** instance id missing **")
         else:
-            curr_key = f"{class_name_id[0]}'>.{class_name_id[1]}"
+            curr_key = f"{class_name_id[0]}.{class_name_id[1]}"
             check = True
             for key in all_model.keys():
                 if curr_key in key:
@@ -144,7 +142,55 @@ class HBNBCommand(cmd.Cmd):
                 print("** attribute name missing **")
             elif len(class_name_id) < 4:
                 print("** value missing **")
+            else:
+                curr_model = all_model[curr_key]
+                print(curr_model)
+                if hasattr(curr_model, class_name_id[2]):
+                    # making a casting to previous type.
+                    previous_type = type(getattr(curr_model, class_name_id[2]))
+                    setattr(curr_model, class_name_id, previous_type(class_name_id[3]))
+                else:
+                    setattr(curr_model, class_name_id[2], class_name_id[3])
+                storage.save()
+
+    def do_count(self, args):
+        storage.reload()
+        all_object = storage.all()
+        cnt = 0
+        for obj in all_object:
+            if args in obj:
+                cnt += 1
+        print(cnt)
+    
+    def default(self, line):
+        my_command_list= {"all(": self.do_all, "count(": self.do_count
+                          , "show(": self.do_show, "destroy(":self.do_destroy
+                          , "update(": self.do_update}
+
+        # handle input
+        l = line.split(".")
+        if len(l) == 2:
+            curr = l[1][:l[1].find("(") + 1]
+            passed= l[1][l[1].find("(") + 1: -1]
+            all = f"{l[0]} {passed}"
+            if curr != "update(" and curr in my_command_list.keys() and l[1][-1] == ")":
+                my_command_list[curr](all.strip())
+            elif curr == "update(":
+                all = l[0]
+                for i in passed:
+                    if i not in [",", "\""]:
+                        all += i
+                    else:
+                        if all[-1] != " ":
+                            all += " "
+                # print(shlex.split(all))
+                my_command_list[curr](all.strip())
+        
 
 
-if __name__ == '__main__':
+
+        
+
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
