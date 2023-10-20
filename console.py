@@ -60,7 +60,7 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         all_model = storage.all()
         class_name_id = shlex.split(args)
-
+        # print(class_name_id)
         if len(class_name_id) == 0:
             print("** class name missing **")
         elif class_name_id[0] not in my_models.keys():
@@ -164,13 +164,17 @@ class HBNBCommand(cmd.Cmd):
         print(cnt)
     
     def default(self, line):
-        my_command_list= {"all()": self.do_all, "count()": self.do_count}
+        my_command_list= {"all(": self.do_all, "count(": self.do_count
+                          , "show(": self.do_show}
 
         # handle input
         l = line.split(".")
-        if l[1] in my_command_list.keys():
-            my_command_list[l[1]](l[0])
-        
+        if len(l) == 2:
+            curr = l[1][:l[1].find("(") + 1]
+            passed= l[1][l[1].find("(") + 1: -1]
+            all = f"{l[0]} {passed}"
+            if  curr in my_command_list.keys() and l[1][-1] == ")":
+                my_command_list[curr](all)
 
 
 
