@@ -164,7 +164,8 @@ class HBNBCommand(cmd.Cmd):
     
     def default(self, line):
         my_command_list= {"all(": self.do_all, "count(": self.do_count
-                          , "show(": self.do_show, "destroy(":self.do_destroy}
+                          , "show(": self.do_show, "destroy(":self.do_destroy
+                          , "update(": self.do_update}
 
         # handle input
         l = line.split(".")
@@ -172,8 +173,19 @@ class HBNBCommand(cmd.Cmd):
             curr = l[1][:l[1].find("(") + 1]
             passed= l[1][l[1].find("(") + 1: -1]
             all = f"{l[0]} {passed}"
-            if  curr in my_command_list.keys() and l[1][-1] == ")":
+            if curr != "update(" and curr in my_command_list.keys() and l[1][-1] == ")":
                 my_command_list[curr](all.strip())
+            elif curr == "update(":
+                all = l[0]
+                for i in passed:
+                    if i not in [",", "\""]:
+                        all += i
+                    else:
+                        if all[-1] != " ":
+                            all += " "
+                # print(shlex.split(all))
+                my_command_list[curr](all.strip())
+        
 
 
 
