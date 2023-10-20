@@ -19,7 +19,6 @@ if not os.path.exists(file_path):
 if os.path.exists(file_path):
     os.remove(file_path)
 
-
 """
  Backup console file
 """
@@ -63,6 +62,7 @@ def exec_command(my_console, the_command, last_lines = 1):
     my_console.stdout = io.StringIO()
     real_stdout = sys.stdout
     sys.stdout = my_console.stdout
+    my_console.preloop()
     the_command = my_console.precmd(the_command)
     my_console.onecmd(the_command)
     sys.stdout = real_stdout
@@ -72,21 +72,18 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-result = exec_command(my_console, "create State")
+result = exec_command(my_console, "create BaseModel")
 if result is None or result == "":
     print("FAIL: No ID retrieved")
     
-with open(file_path, "r") as file:
-    s_file = file.read()
-    if result not in s_file:
-        print("FAIL: New ID not in the JSON file")
 
-model_id = result
-exec_command(my_console, "destroy State {}".format(model_id))
-with open(file_path, "r") as file:
-    s_file = file.read()
-    if result in s_file:
-        print("FAIL: New ID is still in the JSON file")
+result = exec_command(my_console, "BaseModel.count()")
+if result is None or result == "":
+    print("FAIL: no output")
+    
+if int(result) == 0:
+    print("FAIL: count should not be 0")
+    
 print("OK", end="")
 
 shutil.copy("tmp_console_main.py", "console.py")

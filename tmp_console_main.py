@@ -5,6 +5,7 @@
 
 
 import cmd
+import shlex
 from models.base_model import BaseModel
 from models.user import User
 from models.amenity import Amenity
@@ -152,3 +153,29 @@ class HBNBCommand(cmd.Cmd):
                     setattr(curr_model, class_name_id[2], class_name_id[3])
                 storage.save()
 
+    def do_count(self, args):
+        storage.reload()
+        all_object = storage.all()
+        cnt = 0
+
+        for obj in all_object:
+            if args in obj:
+                cnt += 1
+        print(cnt)
+    
+    def default(self, line):
+        my_command_list= {"all()": self.do_all, "count()": self.do_count}
+
+        # handle input
+        l = line.split(".")
+        if l[1] in my_command_list.keys():
+            my_command_list[l[1]](l[0])
+        
+
+
+
+        
+
+
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
