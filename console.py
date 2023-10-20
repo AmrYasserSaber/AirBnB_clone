@@ -5,8 +5,6 @@
 
 
 import cmd
-import sys
-import json
 from models.base_model import BaseModel
 from models import storage
 import shlex
@@ -135,6 +133,13 @@ class HBNBCommand(cmd.Cmd):
             elif len(class_name_id) < 4:
                 print("** value missing **")
             else:
-                curr_model = my_models[curr_key] 
-                setattr(curr_model, class_name_id[2], class_name_id[3])
+                curr_model = all_model[curr_key]
+                print(curr_model)
+                if hasattr(curr_model, class_name_id[2]):
+                    # making a casting to previous type.
+                    previous_type = type(getattr(curr_model, class_name_id[2]))
+                    setattr(curr_model, class_name_id, previous_type(class_name_id[3]))
+                else:
+                    setattr(curr_model, class_name_id[2], class_name_id[3])
                 storage.save()
+
