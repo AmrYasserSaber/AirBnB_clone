@@ -6,11 +6,20 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
+
+
 from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel}
+my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+             "Review": Review, "State": State, "City": City}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -42,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             new_instance = my_models[model_name]()
-            new_instance.save()
+            storage.save()
             print(new_instance.id)
 
     def do_show(self, args=None):
