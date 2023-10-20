@@ -78,13 +78,12 @@ if result is None or result == "":
     
 model_id = result
 
-result = exec_command(my_console, "update BaseModel")
+result = exec_command(my_console, "show BaseModel {}".format(model_id))
 if result is None or result == "":
-    print("FAIL: no output")
+    print("FAIL: empty output")
     
-search_str = "** instance id missing **"
-if result != search_str:
-    print("FAIL: wrong message: \"{}\" instead of \"{}\"".format(result, search_str))
+if "[BaseModel]" not in result or model_id not in result:
+    print("FAIL: wrong output format: \"{}\"".format(result))
     
 print("OK", end="")
 
