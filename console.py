@@ -6,11 +6,20 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
+
+
 from models import storage
 import shlex
 
 
-my_models = {"BaseModel": BaseModel}
+my_models = {"BaseModel": BaseModel, "User": User, "Place": Place, "Amenity": Amenity,
+             "Review": Review, "State": State, "City": City}
 
 
 class HBNBCommand(cmd.Cmd):
