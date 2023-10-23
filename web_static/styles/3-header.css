@@ -3,6 +3,7 @@ header {
 	height: 70px;
 	width: 100dvw;
 	border:1px solid #CCCCCC;
+}
+header img {
 	margin-left: 20px;
-	
 }
