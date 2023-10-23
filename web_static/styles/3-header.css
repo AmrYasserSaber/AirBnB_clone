@@ -1,8 +1,14 @@
+body {
+	margin:0px !important;
+	padding: 0px !important;
+}
 header {
 	background-color:#FFFFFF; 
 	height: 70px;
-	width: 100dvw;
+	/* width: 99vw; */
 	border:1px solid #CCCCCC;
+	margin:0px;
+	padding:0px;
 }
 header img {
 	margin-left: 20px;

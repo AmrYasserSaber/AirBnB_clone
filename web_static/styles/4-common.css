@@ -7,7 +7,8 @@
 }
 
 .container {
-	max-width: min(1000px, 97dvw);
+	max-width: min(1000px, 97vw);
 	margin-block: 30px;
 	margin-inline:auto;
+	margin-bottom: 100px;
 }
