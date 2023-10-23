@@ -30,27 +30,24 @@
 		display: inline-block;
 		width: 25%;
 		height: 100%;
-		/* margin-left: 40px; */
 		position: relative;
+		& > h3 {
+			margin-left:10px;
+			margin-top: 16px;
+		}
+		& > h4 {
+			margin-left: 10px;
+		}
 	}
 	& .locations {
 		border-right: 1px solid #DDDDDD;
 	}
-	& .locations h3,
-	& .amenities h3 
-	{
-		margin-left:10px;
-		margin-top: 16px;
-	}
-	& .locations h4, 
-	& .amenities h4 
-	{
-		margin-left: 10px;
-	}
+
 	& .popover {
 		position: absolute;
 		display: none;
 		list-style: none;
+		
 		background-color: #FAFAFA;
 		border-inline: 1px solid #DDDDDD ;
 		border-bottom: 1px solid #DDDDDD ;
@@ -71,16 +68,21 @@
 			}
 		}	
 	}
+	& .amenities .popover {
+		margin-left: -4px;
+	}
 	& .amenities .popover li {
 		font-weight: normal;
 	}
 
 	.locations:hover,
 	.amenities:hover {
-		& ul {
+		& .popover {
 			display: block;
 		}
 	}
+	
+	
 	
 
 }
